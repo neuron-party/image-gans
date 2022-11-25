@@ -1,3 +1,3 @@
 # image-gans
 
-working on huggingface space right now :)
+HuggingFace Space: https://huggingface.co/spaces/sleepyml/colorizer
