@@ -1,3 +1,4 @@
 # image-gans
 
-HuggingFace Space: https://huggingface.co/spaces/sleepyml/colorizer
+`Colorizer HuggingFace Space`: https://huggingface.co/spaces/sleepyml/colorizer
+`Style Transfer HuggingFace Space:` comin soon

@@ -88,6 +88,32 @@ class Attention(nn.Module):
         attention = attention.view(*shape).contiguous()
         return attention
     
+    
+class ITN_ResidualBlock(nn.Module):
+    '''Double convolution residual block used in [https://arxiv.org/pdf/1703.10593.pdf, https://arxiv.org/abs/1603.08155]'''
+    def __init__(self, channels):
+        super().__init__()
+        
+        self.conv1 = nn.Sequential(
+            nn.ReflectionPad2d(1),
+            nn.Conv2d(in_channels=channels, out_channels=channels, kernel_size=3, stride=1, bias=False),
+            nn.InstanceNorm2d(channels),
+            nn.ReLU(inplace=True)
+        )
+        self.conv2 = nn.Sequenial(
+            nn.ReflectionPad2d(1),
+            nn.Conv2d(in_channels=channels, out_channels=channels, kernel_size=3, stride=1, bias=False),
+            nn.InstanceNorm2d(channels)
+        )
+
+    def forward(self, x):
+        residual = x
+        x = self.conv1(x)
+        x = self.conv2(x)
+        x = residual + x
+        out = F.relu(x)
+        return out
+       
 
 class SigmoidRange(nn.Module):
     def __init__(self, low, high):
