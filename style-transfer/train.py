@@ -40,6 +40,11 @@ def main():
     # todo: add parameters to model files for flexibility in the future
     generator_g = DeepUNet().to(device)
     generator_f = DeepUNet().to(device)
+    
+    # replace the [-3, 3] SigmoidRange with a regular sigmoid for this task
+    generator_g.conv_block[5] = nn.Sigmoid()
+    generator_f.conv_block[5] = nn.Sigmoid()
+    
     discriminator_y = PatchCritic().to(device)
     discriminator_x = PatchCritic().to(device)
     
