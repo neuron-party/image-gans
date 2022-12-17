@@ -16,8 +16,8 @@ def postprocess_img(original_img: Image.Image, colored_img: Image.Image) -> Imag
     return processed_img
 
 
-def create_gram_matrix(x):
+def create_gram_matrix(x, normalize=False):
     b, c, h, w = x.shape
     x, x_T = x.flatten(start_dim=2), x.flatten(start_dim=2).permute(0, 2, 1)
-    gram_matrix = x @ x_T
+    gram_matrix = x @ x_T if not normalize else (x @ x_T) / (c * h * w) # normalization from perceptual loss paper
     return gram_matrix
